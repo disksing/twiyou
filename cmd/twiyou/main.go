@@ -3,11 +3,11 @@ package main
 import (
 	"log"
 
-	"github.com/disksing/twiyou"
+	"github.com/disksing/twiyou/scraper"
 )
 
 func main() {
-	scraper, err := twiyou.NewScraper()
+	scraper, err := scraper.NewScraper()
 	if err != nil {
 		log.Fatal(err)
 	}

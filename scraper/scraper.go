@@ -1,4 +1,4 @@
-package twiyou
+package scraper
 
 import (
 	"database/sql"
