@@ -1,0 +1,18 @@
+package main
+
+// `cp dev.go.example dev.go` to make it work.
+
+import (
+	"github.com/disksing/twiyou/store"
+	"github.com/disksing/twiyou/twitter"
+)
+
+func init() {
+	twitter.TWITTER_USER_NAME = "disksing"
+	twitter.TWITTER_BEARER_TOKEN = ""
+	store.DB_HOST = "127.0.0.1"
+	store.DB_PORT = "4000"
+	store.DB_USER = "root"
+	store.DB_NAME = "test"
+	store.DB_PASSWD = ""
+}
