@@ -22,6 +22,7 @@ twiyou（推油）是一款推特好友/推特数据监测工具。
 ### 1. 注册 twitter 开发者账号
 
 注册地址：https://developer.twitter.com/en
+
 申请成功后创建一个项目，然后把如图所示的Bearer Token记录下来备用。
 
 ![Screenshot 2022-10-07 152412](https://user-images.githubusercontent.com/12077877/194496392-21d8939d-0044-4070-b7a4-272963f5868d.png)
@@ -29,6 +30,7 @@ twiyou（推油）是一款推特好友/推特数据监测工具。
 ### 2. 注册 TiDB Cloud DevTier
 
 注册地址：https://tidbcloud.com/
+
 完成后创建一个免费的DevTier集群，然后在集群页面可以看到连接参数。
 
 ![Screenshot 2022-10-07 152706](https://user-images.githubusercontent.com/12077877/194497136-7d33c809-327d-4d63-9a01-ffc39f1e73f3.png)
@@ -36,12 +38,15 @@ twiyou（推油）是一款推特好友/推特数据监测工具。
 ### 3. 部署数据抓取工具
 
 下载地址：TBD
+
 然后配置好crontab和环境变量每5分钟运行一次就行，抓下来的数据都会写到数据库里面，本地不存数据。
+
 环境变量设置如下图。
 
 ![Screenshot 2022-10-07 153706](https://user-images.githubusercontent.com/12077877/194498629-d8a8972f-2545-4469-b26e-c563b242f8b2.png)
 
 注意DB_NAME需要提前自己连接数据库后创建，懒得手动创建的话直接填test数据库也行。
+
 `TWITTER_USER_NAME`填自己的twitter id，当然你如果想监控别人的好友，填别人的id也可以。
 
 也可以fork项目后部署到Vercel（纯后端，无界面），然后额外需要有个触发器定时访问`https://your-app.vercel.app/api/cron`，这个第三方服务比较多，比如GitHub Action，Cloudflare worker，都行。
@@ -49,6 +54,7 @@ twiyou（推油）是一款推特好友/推特数据监测工具。
 ### 4. 配置 Grafana
 
 注册地址：https://grafana.com
+
 完成后在自己的Grafana实例添加MySQL数据源，参考截图，这里Timezone不要填。
 
 ![Screenshot 2022-10-07 154637](https://user-images.githubusercontent.com/12077877/194501010-32e40820-f282-4f4e-b627-392cd375ec33.png)
