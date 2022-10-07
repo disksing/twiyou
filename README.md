@@ -44,7 +44,7 @@ twiyou（推油）是一款推特好友/推特数据监测工具。
 注意DB_NAME需要提前自己连接数据库后创建，懒得手动创建的话直接填test数据库也行。
 `TWITTER_USER_NAME`填自己的twitter id，当然你如果想监控别人的好友，填别人的id也可以。
 
-也可以fork项目后部署到Vercel，然后额外需要有个触发器定时访问`https://your-app.vercel.app/api/cron`，这个第三方服务比较多，比如GitHub Action，Cloudflare worker，都行。
+也可以fork项目后部署到Vercel（纯后端，无界面），然后额外需要有个触发器定时访问`https://your-app.vercel.app/api/cron`，这个第三方服务比较多，比如GitHub Action，Cloudflare worker，都行。
 
 ### 4. 配置 Grafana
 
