@@ -57,7 +57,7 @@ twiyou（推油）是一款推特好友/推特数据监测工具。
 
 ## 一些问题和后续计划（请求出谋划策）
 
-1. twitter开发者账号申请比较麻烦，而且API的rate limit等限制颇多，可以考虑换成绕过开发者API的方案。例如[twint](https://github.com/twintproject/twint)，不过我还没仔细研究。
+1. twitter开发者账号申请比较麻烦，而且API的rate limit等限制颇多，可以考虑换成绕过开发者API的方案。例如[twint](https://github.com/twintproject/twint)，不过我还没仔细研究。不好搞的话，或许可以考虑配置多个API key，轮换着用。
 
 2. 想把自己的历史推文抓下来分析下，比如统计历史推文的传播表现，或者把发推历史跟follower数量变化做点关联分析之类，但是目前twitter API限制只能抓近一周的历史推文，所以这个功能可能依赖于上一个问题的解决。
 
