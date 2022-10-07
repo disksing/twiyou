@@ -53,7 +53,7 @@ twiyou（推油）是一款推特好友/推特数据监测工具。
 
 ![Screenshot 2022-10-07 154637](https://user-images.githubusercontent.com/12077877/194501010-32e40820-f282-4f4e-b627-392cd375ec33.png)
 
-然后导入预定义模板（TBD），选择之前创建的数据源。
+然后导入[预定义模板](https://raw.githubusercontent.com/disksing/twiyou/master/grafana/twitter-statistics.json)，选择之前创建的数据源。
 
 ## 一些问题和后续计划（请求出谋划策）
 
