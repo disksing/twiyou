@@ -14,7 +14,7 @@ twiyou（推油）是一款推特好友/推特数据监测工具。
 运行起来需要部署3个组件：数据库，数据抓取工具，监控面板，目前这3个组件都有免费的白嫖资源，此外需要有推特开发者账号。
 
 - 数据库我用的是TiDB Cloud DevTier (https://tidbcloud.com/ )的免费资源，理论上兼容MySQL协议的应该都行，不过我没试。
-- 数据抓取工具可以从 [Release](https://github.com/disksing/twiyou/releases) 下载或者自行 `go build ./cmd/twiyou` 编译出来，找台机器配置好环境变量定时运行程序就行（推荐5分钟运行一次）。也可以白嫖 Github Action 或者 Vercel (https://vercel.com/ )。
+- 数据抓取工具可以从 [Release](https://github.com/disksing/twiyou/releases) 下载或者自行 `go build ./cmd/twiyou` 编译出来，找台机器配置好环境变量定时运行程序就行（推荐5分钟运行一次）。也可以白嫖 Github Action。
 - 监控面板用的是Grafana，Grafana Cloud (https://grafana.com/ )也是可以创建免费的账号，添加数据库数据源之后，把监控模板导入就行。
 
 ## 搭建自己的部署（详细攻略）
