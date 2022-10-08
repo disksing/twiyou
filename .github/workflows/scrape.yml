@@ -11,6 +11,7 @@ name: Run scraper
 #  -d '{"ref": "master"}'
 
 on:
+  push:
   workflow_dispatch:
 
 jobs:
