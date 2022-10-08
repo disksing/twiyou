@@ -20,7 +20,7 @@ jobs:
     - name: Download latest release
       uses: robinraju/release-downloader@v1.5
       with:
-        repository: ${{ github.repository }}
+        repository: disksing/twiyou
         latest: true
         fileName: "twiyou_*_Linux_x86_64.tar.gz"
     - name: Extract tarball
