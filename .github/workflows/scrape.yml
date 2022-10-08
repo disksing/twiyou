@@ -1,9 +1,17 @@
-name: scrape-every-5-minutes
+name: Run scraper
+
+# This workflow can be triggered manually or by an API call.
+# https://docs.github.com/en/rest/actions/workflows#create-a-workflow-dispatch-event
+# Example:
+# curl \
+#  -X POST \
+#  -H "Accept: application/vnd.github+json" \
+#  -H "Authorization: Bearer <YOUR-TOKEN>" \
+#  https://api.github.com/repos/<OWNER>/twiyou/actions/workflows/scrape.yml/dispatches \
+#  -d '{"ref": "master"}'
 
 on:
-  push:
-  schedule:
-    - cron: '*/5 * * * *'
+  workflow_dispatch:
 
 jobs:
   scrape:
