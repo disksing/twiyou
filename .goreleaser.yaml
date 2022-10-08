@@ -12,6 +12,12 @@ builds:
       - linux
       - windows
       - darwin
+    goarch:
+      - amd64
+      - arm64
+    flags:
+      - -v
+      - -trimpath
 archives:
   - replacements:
       darwin: Darwin
@@ -29,4 +35,3 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
-
