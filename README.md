@@ -51,18 +51,21 @@ twiyou（推油）是一款推特好友/推特数据监测工具。
 
 如果自己没有服务器的话，可以使用免费的 GitHub Action 来跑：
 1. fork 这个项目
-2. 在 Settings - Secrets 里配置好环境变量
-3. 配置一个触发器定时发送类似下面的 API 请求来触发 Github Action：
+2. 在 Repo Settings - Secrets 里配置好环境变量
+3. 在 https://github.com/settings/profile - Developer Settings - Personal Access Token 里生成一个新的 token
+4. 配置一个触发器定时发送类似下面的 API 请求来触发 Github Action：
 ```shell
 curl \
 -X POST \
 -H "Accept: application/vnd.github+json" \
--H "Authorization: Bearer <YOUR-TOKEN>" \
+-H "Authorization: Bearer <YOUR-GITHUB-TOKEN>" \
 https://api.github.com/repos/<OWNER>/twiyou/actions/workflows/scrape.yml/dispatches \
 -d '{"ref": "master"}'
 ```
 
 这类第三方服务比较多，比如 Cloudflare worker，https://cron-job.org 都行。以 cron-job.org 为例：
+<img width="500" alt="image" src="https://user-images.githubusercontent.com/10510431/194699857-750ddb69-a377-4be0-a26d-9af24951c430.png">
+<img width="500" alt="image" src="https://user-images.githubusercontent.com/10510431/194699890-629095d5-1619-41b7-a234-8fcbf3235358.png">
 
 
 ### 4. 配置 Grafana
