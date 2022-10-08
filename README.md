@@ -59,7 +59,7 @@ https://api.github.com/repos/<OWNER>/twiyou/actions/workflows/scrape.yml/dispatc
 -d '{"ref": "master"}'
 ```
 
-这类第三方服务比较多，比如 Cloudflare worker，cron-job.org 都行。
+这类第三方服务比较多，比如 Cloudflare worker，https://cron-job.org 都行。
 
 ### 4. 配置 Grafana
 
