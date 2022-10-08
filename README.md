@@ -49,7 +49,10 @@ twiyou（推油）是一款推特好友/推特数据监测工具。
 
 `TWITTER_USER_NAME`填自己的twitter id，当然你如果想监控别人的好友，填别人的id也可以。
 
-如果自己没有服务器的话，也可以 fork 项目后，配置一个触发器定时发送类似下面的 API 请求来触发 Github Action：
+如果自己没有服务器的话，可以使用免费的 GitHub Action 来跑：
+1. fork 这个项目
+2. 在 Settings - Secrets 里配置好环境变量
+3. 配置一个触发器定时发送类似下面的 API 请求来触发 Github Action：
 ```shell
 curl \
 -X POST \
@@ -59,7 +62,8 @@ https://api.github.com/repos/<OWNER>/twiyou/actions/workflows/scrape.yml/dispatc
 -d '{"ref": "master"}'
 ```
 
-这类第三方服务比较多，比如 Cloudflare worker，https://cron-job.org 都行。
+这类第三方服务比较多，比如 Cloudflare worker，https://cron-job.org 都行。以 cron-job.org 为例：
+
 
 ### 4. 配置 Grafana
 
