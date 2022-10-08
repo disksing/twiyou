@@ -1,0 +1,27 @@
+name: scrape-every-5-minutes
+
+on:
+  push:
+  schedule:
+    - cron: '*/5 * * * *'
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: robinraju/release-downloader@v1.5
+      with:
+        repository: ${{ github.repository }}
+        latest: true
+        fileName: "twiyou_*_Linux_x86_64.tar.gz"
+    - run: tar -xvf twiyou_*_Linux_x86_64.tar.gz
+    - name: Run scraper
+      run: ./twiyou
+      env:
+        TWITTER_USER_NAME: ${{ secrets.TWITTER_USER_NAME }}
+        TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
+        DB_HOST: ${{ secrets.DB_HOST }}
+        DB_PORT: ${{ secrets.DB_PORT }}
+        DB_USER: ${{ secrets.DB_USER }}
+        DB_NAME: ${{ secrets.DB_NAME }}
+        DB_PASSWD: ${{ secrets.DB_PASSWD }}
