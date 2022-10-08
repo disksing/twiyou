@@ -14,7 +14,7 @@ twiyou（推油）是一款推特好友/推特数据监测工具。
 运行起来需要部署3个组件：数据库，数据抓取工具，监控面板，目前这3个组件都有免费的白嫖资源，此外需要有推特开发者账号。
 
 - 数据库我用的是TiDB Cloud DevTier (https://tidbcloud.com/ )的免费资源，理论上兼容MySQL协议的应该都行，不过我没试。
-- 数据抓取工具可以从 [Release](https://github.com/disksing/twiyou/releases) 下载或者自行 `go build ./cmd/twiyou` 编译出来，找台机器配置好环境变量定时运行程序就行（推荐5分钟运行一次）。也可以免费部署到Vercel (https://vercel.com/ )，不过我测了效果不算太好，没有服务器资源的话可以凑合用。
+- 数据抓取工具可以从 [Release](https://github.com/disksing/twiyou/releases) 下载或者自行 `go build ./cmd/twiyou` 编译出来，找台机器配置好环境变量定时运行程序就行（推荐5分钟运行一次）。也可以白嫖 Github Action 或者 Vercel (https://vercel.com/ )。
 - 监控面板用的是Grafana，Grafana Cloud (https://grafana.com/ )也是可以创建免费的账号，添加数据库数据源之后，把监控模板导入就行。
 
 ## 搭建自己的部署（详细攻略）
@@ -49,7 +49,17 @@ twiyou（推油）是一款推特好友/推特数据监测工具。
 
 `TWITTER_USER_NAME`填自己的twitter id，当然你如果想监控别人的好友，填别人的id也可以。
 
-也可以fork项目后部署到Vercel（纯后端，无界面），然后额外需要有个触发器定时访问`https://your-app.vercel.app/api/cron`，这个第三方服务比较多，比如GitHub Action，Cloudflare worker，都行。
+如果自己没有服务器的话，也可以 fork 项目后，配置一个触发器定时发送类似下面的 API 请求来触发 Github Action：
+```shell
+curl \
+-X POST \
+-H "Accept: application/vnd.github+json" \
+-H "Authorization: Bearer <YOUR-TOKEN>" \
+https://api.github.com/repos/<OWNER>/twiyou/actions/workflows/scrape.yml/dispatches \
+-d '{"ref": "master"}'
+```
+
+这类第三方服务比较多，比如 Cloudflare worker，cron-job.org 都行。
 
 ### 4. 配置 Grafana
 
@@ -66,6 +76,3 @@ twiyou（推油）是一款推特好友/推特数据监测工具。
 1. twitter开发者账号申请比较麻烦，而且API的rate limit等限制颇多，可以考虑换成绕过开发者API的方案。例如[twint](https://github.com/twintproject/twint)，不过我还没仔细研究。不好搞的话，或许可以考虑配置多个API key，轮换着用。
 
 2. 想把自己的历史推文抓下来分析下，比如统计历史推文的传播表现，或者把发推历史跟follower数量变化做点关联分析之类，但是目前twitter API限制只能抓近一周的历史推文，所以这个功能可能依赖于上一个问题的解决。
-
-3. 完全白嫖方案里面Vercel表现不太理想，主要是每次运行有10秒的限制，感觉性能也不太行，经常跑不完任务，加上twitter API rate limit的限制，需要好长时间才能刷新一轮数据，反正我自己是不用，不知道有没有性能更好运行时长更宽松的免费方案。
-
