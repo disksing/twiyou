@@ -76,6 +76,7 @@ type UserV1 struct {
 }
 
 // ListFriendsByV1 获取 Friends or Followers
+// last cursor is 0
 func ListFriendsByV1(userID string, typ string, nextCursor string, guestToken string) ([]UserV1, string, error) {
 	reqUrl := fmt.Sprintf("https://api.twitter.com/1.1/%s/list.json", typ)
 
