@@ -1,10 +1,16 @@
 package twitter
 
+/*
+	How to use
+	First generate a guest token by GenerateGuestToken, better with a proxy
+	Then use the guest token to list users.
+*/
 import (
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
 )
 
@@ -23,11 +29,11 @@ func GenerateGuestToken(proxyUrl string) (bool, string) {
 	req.Header.Add("Authorization", AUTHORIZATION)
 	req.Header.Add("User-Agent", USERAGENT)
 
-	proxy, _ := url.Parse(proxyUrl)
-	tr := &http.Transport{
-		Proxy: http.ProxyURL(proxy),
+	tr := &http.Transport{}
+	if proxyUrl != "" {
+		proxy, _ := url.Parse(proxyUrl)
+		tr.Proxy = http.ProxyURL(proxy)
 	}
-
 	client := &http.Client{
 		Transport: tr,
 		Timeout:   time.Second * 30,
@@ -62,16 +68,22 @@ type UserV1 struct {
 	TweetCount      int    `json:"statuses_count"`
 	ListedCount     int    `json:"listed_count"`
 	Verified        bool   `json:"verified"`
+	Status          struct {
+		ID        string `json:"id_str"`
+		CreatedAt string `json:"created_at"`
+		Text      string `json:"text"`
+	} `json:"status"` // 最新一条帖文
 }
 
+// ListFriendsByV1 获取 Friends or Followers
 func ListFriendsByV1(userID string, typ string, nextCursor string, guestToken string) ([]UserV1, string, error) {
 	reqUrl := fmt.Sprintf("https://api.twitter.com/1.1/%s/list.json", typ)
 
 	req, _ := http.NewRequest("GET", reqUrl, nil)
 	params := req.URL.Query()
 	params.Add("user_id", userID)
-	params.Add("skip_status", "true")
-	params.Add("count", "10")
+	// params.Add("skip_status", "true")  // 传递该值表示忽略最新帖文
+	params.Add("count", "200")
 	if nextCursor != "" {
 		params.Add("cursor", nextCursor)
 	}
@@ -105,4 +117,39 @@ func ListFriendsByV1(userID string, typ string, nextCursor string, guestToken st
 	}
 
 	return result.Users, result.NextCursor, nil
+}
+
+// ListUsersByV1 批量获取用户信息 不含 Status 数据
+func ListUsersByV1(ids []string, guestToken string) ([]UserV1, error) {
+	reqUrl := "https://api.twitter.com/1.1/users/lookup.json"
+
+	req, _ := http.NewRequest("GET", reqUrl, nil)
+	params := req.URL.Query()
+	params.Add("user_id", strings.Join(ids, ","))
+	req.URL.RawQuery = params.Encode()
+
+	req.Header.Add("Authorization", AUTHORIZATION)
+	req.Header.Add("x-guest-token", guestToken)
+	req.Header.Add("User-Agent", USERAGENT)
+
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		fmt.Println("请求出错", err)
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var users []UserV1
+	if resp.StatusCode != http.StatusOK {
+		fmt.Println("响应出错", resp.StatusCode)
+		return nil, err
+	}
+
+	err = json.NewDecoder(resp.Body).Decode(&users)
+	if err != nil {
+		fmt.Println("解析出错", resp.StatusCode)
+		return nil, err
+	}
+
+	return users, nil
 }
