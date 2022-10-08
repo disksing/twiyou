@@ -9,12 +9,14 @@ jobs:
   scrape:
     runs-on: ubuntu-latest
     steps:
-    - uses: robinraju/release-downloader@v1.5
+    - name: Download latest release
+      uses: robinraju/release-downloader@v1.5
       with:
         repository: ${{ github.repository }}
         latest: true
         fileName: "twiyou_*_Linux_x86_64.tar.gz"
-    - run: tar -xvf twiyou_*_Linux_x86_64.tar.gz
+    - name: Extract tarball
+      run: tar -xvf twiyou_*_Linux_x86_64.tar.gz
     - name: Run scraper
       run: ./twiyou
       env:
