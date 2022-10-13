@@ -84,3 +84,14 @@ https://api.github.com/repos/<OWNER>/twiyou/actions/workflows/scrape.yml/dispatc
 1. twitter开发者账号申请比较麻烦，而且API的rate limit等限制颇多，可以考虑换成绕过开发者API的方案。例如[twint](https://github.com/twintproject/twint)，不过我还没仔细研究。不好搞的话，或许可以考虑配置多个API key，轮换着用。
 
 2. 想把自己的历史推文抓下来分析下，比如统计历史推文的传播表现，或者把发推历史跟follower数量变化做点关联分析之类，但是目前twitter API限制只能抓近一周的历史推文，所以这个功能可能依赖于上一个问题的解决。
+
+## 排障 FAQ
+
+1. `2022/10/13 07:37:39 Error 1130: Host '4.246.175.211' is blocked by traffic filter. See https://docs.pingcap.com/tidbcloud/connect-to-tidb-cluster#connect-via-standard-connection`
+
+原因，TiDB Cloud 中 Cluster 未配置允许外部 IP 访问集群，需要 Create traffic filter，在其中增加 twiyou 二进制访问的出口 IP，如果没有固定 IP 可以允许任意 IP：`0.0.0.0/0`，只需要在 TiCloud 网页 Console 的集群下 Edit 就好了。
+
+2. `client has multi-statement capability disabled. Run SET GLOBAL tidb_multi_statement_mode='ON' after you understand the security risk`
+
+原因，报错是自解释的，不更改 twiyou/client 上的 multi-statement 模式的情况下，可以在 TiDB Cloud WebShell 里执行 `SET GLOBAL tidb_multi_statement_mode='ON'`，只需要在 TiCloud 网页 Console 的集群下点击 Connect 然后点击 WebShell，在 Shell 里输入密码登陆之后执行就好了。
+
