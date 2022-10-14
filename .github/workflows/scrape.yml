@@ -13,6 +13,8 @@ name: Run scraper
 on:
   workflow_dispatch:
 
+permissions: {}
+
 jobs:
   scrape:
     runs-on: ubuntu-latest
