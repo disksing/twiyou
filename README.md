@@ -35,7 +35,9 @@ twiyou（推油）是一款推特好友/推特数据监测工具。
 
 ![Screenshot 2022-10-07 152706](https://user-images.githubusercontent.com/12077877/194497136-7d33c809-327d-4d63-9a01-ffc39f1e73f3.png)
 
-### 3. 部署数据抓取工具
+### 3. 运行数据抓取工具
+
+#### 方法1：使用 binary 部署
 
 下载地址：https://github.com/disksing/twiyou/releases
 
@@ -48,6 +50,8 @@ twiyou（推油）是一款推特好友/推特数据监测工具。
 注意DB_NAME需要提前自己连接数据库后创建，懒得手动创建的话直接填test数据库也行。
 
 `TWITTER_USER_NAME`填自己的twitter id，当然你如果想监控别人的好友，填别人的id也可以。
+
+#### 方法2：使用 GithubAction
 
 如果自己没有服务器的话，可以使用免费的 GitHub Action 来跑：
 1. fork 这个项目
@@ -68,6 +72,10 @@ https://api.github.com/repos/<OWNER>/twiyou/actions/workflows/scrape.yml/dispatc
   <img width="45%" alt="image" src="https://user-images.githubusercontent.com/10510431/194699857-750ddb69-a377-4be0-a26d-9af24951c430.png">
   <img width="45%" alt="image" src="https://user-images.githubusercontent.com/10510431/194699890-629095d5-1619-41b7-a234-8fcbf3235358.png">
 </p>
+
+#### 方法3：使用 Docker / Kubernetes 部署
+
+详细说明参考 [xiaowenz/twiyou](https://hub.docker.com/r/xiaowenz/twiyou)
 
 ### 4. 配置 Grafana
 
