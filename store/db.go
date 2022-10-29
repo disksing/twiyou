@@ -39,7 +39,7 @@ func NewDB() (*DB, error) {
 	if DB_HOST == "" || DB_PORT == "" || DB_USER == "" || DB_NAME == "" {
 		return nil, errors.New("DB environment variables not set")
 	}
-	d, err := sqlx.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", DB_USER, DB_PASSWD, DB_HOST, DB_PORT, DB_NAME))
+	d, err := sqlx.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true&tls=true", DB_USER, DB_PASSWD, DB_HOST, DB_PORT, DB_NAME))
 	if err != nil {
 		return nil, err
 	}
