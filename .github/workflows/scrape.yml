@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Download latest release
-      uses: robinraju/release-downloader@v1.5
+      uses: robinraju/release-downloader@v1.6
       with:
         repository: disksing/twiyou
         latest: true
