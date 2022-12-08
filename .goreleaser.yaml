@@ -28,8 +28,8 @@ checksum:
   name_template: 'checksums.txt'
 dockers:
   - image_templates:
-      - "ghcr.io/{{ .Env.GITHUB_ACTOR }}/{{ .ProjectName }}:{{ .Tag }}"
-      - "ghcr.io/{{ .Env.GITHUB_ACTOR }}/{{ .ProjectName }}:latest"
+      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:{{ .Tag }}"
+      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:latest"
     goos: linux
     goarch: amd64
     use: buildx
