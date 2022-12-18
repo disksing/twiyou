@@ -26,6 +26,22 @@ archives:
       amd64: x86_64
 checksum:
   name_template: 'checksums.txt'
+dockers:
+  - image_templates:
+      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:{{ .Tag }}"
+      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY }}:latest"
+    goos: linux
+    goarch: amd64
+    use: buildx
+    build_flag_templates:
+      - "--label=org.opencontainers.image.created={{ .Date }}"
+      - "--label=org.opencontainers.image.revision={{ .ShortCommit }}"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+      - "--label=org.opencontainers.image.source={{ .GitURL }}"
+      - "--label=org.opencontainers.image.title={{ .ProjectName }}"
+      - "--label=org.opencontainers.image.description=Twitter friend monitoring tool"
+      - "--label=org.opencontainers.image.licenses=BSD 3-Clause"
+      - "--platform=linux/amd64"
 snapshot:
   name_template: "{{ incpatch .Version }}-next"
 changelog:
