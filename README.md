@@ -51,21 +51,23 @@ twiyou（推油）是一款推特好友/推特数据监测工具。
 
 `TWITTER_USER_NAME`填自己的twitter id，当然你如果想监控别人的好友，填别人的id也可以。
 
-#### 方法2：使用 GithubAction
+#### 方法2：使用 Github Actions
 
 如果自己没有服务器的话，可以使用免费的 GitHub Action 来跑：
+
 1. fork 这个项目
 2. 在 Repo Settings - Secrets 里配置好环境变量
 3. 在 https://github.com/settings/tokens 里生成一个新的 Personal access token
 4. 配置一个触发器定时发送类似下面的 HTTP 请求来触发 Github Action：
-```shell
-curl \
--X POST \
--H "Accept: application/vnd.github+json" \
--H "Authorization: Bearer <YOUR-GITHUB-TOKEN>" \
-https://api.github.com/repos/<OWNER>/twiyou/actions/workflows/scrape.yml/dispatches \
--d '{"ref": "master"}'
-```
+
+    ```shell
+    curl \
+    -X POST \
+    -H "Accept: application/vnd.github+json" \
+    -H "Authorization: Bearer <YOUR-GITHUB-TOKEN>" \
+    https://api.github.com/repos/<OWNER>/twiyou/actions/workflows/scrape.yml/dispatches \
+    -d '{"ref": "master"}'
+    ```
 
 这类第三方服务比较多，比如 Cloudflare worker，https://cron-job.org 都行。以 cron-job.org 为例：
 <p align="center">
@@ -81,9 +83,11 @@ https://api.github.com/repos/<OWNER>/twiyou/actions/workflows/scrape.yml/dispatc
 
 注册地址：https://grafana.com
 
-完成后在自己的Grafana实例添加MySQL数据源，参考截图，这里Timezone不要填。
+完成后在自己的Grafana实例添加MySQL数据源，参考截图：
 
-![Screenshot 2022-10-07 154637](https://user-images.githubusercontent.com/12077877/194501010-32e40820-f282-4f4e-b627-392cd375ec33.png)
+![image](https://user-images.githubusercontent.com/10510431/209826828-7c14b4bb-648b-4011-aa5f-393f04aafbde.png)
+
+这里Timezone不要填，开启 `With CA Cert`，然后将这个根证书 [pem](https://letsencrypt.org/certs/isrgrootx1.pem.txt) 粘贴到 `TLS/SSL Root Certificate` 中。
 
 然后导入[预定义模板](https://raw.githubusercontent.com/disksing/twiyou/master/grafana/twitter-statistics.json)，选择之前创建的数据源。在第一轮数据抓完之前，可能不会立即看到数据。
 
@@ -97,9 +101,9 @@ https://api.github.com/repos/<OWNER>/twiyou/actions/workflows/scrape.yml/dispatc
 
 1. `2022/10/13 07:37:39 Error 1130: Host '4.246.175.211' is blocked by traffic filter. See https://docs.pingcap.com/tidbcloud/connect-to-tidb-cluster#connect-via-standard-connection`
 
-原因，TiDB Cloud 中 Cluster 未配置允许外部 IP 访问集群，需要 Create traffic filter，在其中增加 twiyou 二进制访问的出口 IP，如果没有固定 IP 可以允许任意 IP：`0.0.0.0/0`，只需要在 TiCloud 网页 Console 的集群下 Edit 就好了。
+原因是 TiDB Cloud 中 Cluster 未配置允许外部 IP 访问集群，需要 Create traffic filter，在其中增加 twiyou 二进制访问的出口 IP，如果没有固定 IP 可以允许任意 IP：`0.0.0.0/0`，只需要在 TiCloud 网页 Console 的集群下 Edit 就好了。
 
 2. `client has multi-statement capability disabled. Run SET GLOBAL tidb_multi_statement_mode='ON' after you understand the security risk`
 
-原因，报错是自解释的，不更改 twiyou/client 上的 multi-statement 模式的情况下，可以在 TiDB Cloud WebShell 里执行 `SET GLOBAL tidb_multi_statement_mode='ON'`，只需要在 TiCloud 网页 Console 的集群下点击 Connect 然后点击 WebShell，在 Shell 里输入密码登陆之后执行就好了。
+这个报错是自解释的，不更改 twiyou/client 上的 multi-statement 模式的情况下，可以在 TiDB Cloud WebShell 里执行 `SET GLOBAL tidb_multi_statement_mode='ON'`，只需要在 TiCloud 网页 Console 的集群下点击 Connect 然后点击 WebShell，在 Shell 里输入密码登陆之后执行就好了。
 
