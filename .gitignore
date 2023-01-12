@@ -3,3 +3,6 @@
 twiyou
 
 dist/
+
+# GoLand
+.idea/
